@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
 import {LoggingService} from '../shared/logging.service';
+import {ShoppingListService} from './shopping-list.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -9,19 +10,17 @@ import {LoggingService} from '../shared/logging.service';
   providers: [LoggingService]
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [
-    new Ingredient('Apples', 5),
-    new Ingredient('Tomatos', 10)
-  ];
+  ingredients: Ingredient[];
 
-  constructor(private loggingService: LoggingService) { }
+  constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit() {
-  }
-
-  onIngredientAdded(ingredient: Ingredient) {
-    this.loggingService.logStatusChange('new ingredient added');
-    this.ingredients.push(ingredient);
+    this.ingredients = this.shoppingListService.getIngredients();
+    this.shoppingListService.ingredientsChanged
+      .subscribe((ingredients: Ingredient[]) => {
+          this.ingredients = ingredients;
+        }
+      );
   }
 
 }
