@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Recipe} from '../../recipe.model';
+//import 'bootstrap/dist/js/bootstrap.bundle';
 
 @Component({
   selector: 'app-recipe-item',
